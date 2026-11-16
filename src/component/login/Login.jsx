@@ -1,7 +1,7 @@
 import React,{useContext, useState} from 'react'
 import '../signup/signup.css'
 import { useNavigate } from 'react-router-dom'
-import axios from 'axios'
+import api from '../../api'
 import { productContext } from '../contextAPI/Context'
 
 const Login = () => {
@@ -10,7 +10,6 @@ const Login = () => {
     const [email, setMail] = useState('')
     const [password, setPassword] = useState('')
   
-    const url = "http://https://shoestop-backend-zo6y.onrender.com/login"
  
     const changeMailHandler = (e) => {
         setMail(e.target.value)
@@ -21,7 +20,7 @@ const Login = () => {
   
     const submitHandler = () => {
       // console.log(name, mail, password)
-      axios.post(url, { name, email, password })
+      api.post('/login', { email, password })
       .then(res => {
           if (res.status === 200 || res.status === 201) {
             

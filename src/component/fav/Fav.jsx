@@ -2,11 +2,10 @@ import React, { useContext } from 'react'
 import './fav.css'
 import { Button } from 'react-bootstrap'
 import { productContext } from '../contextAPI/Context'
-import axios from 'axios'
+import api from '../../api'
 
 const Fav = () => {
 
-  const url = "http://https://shoestop-backend-zo6y.onrender.com/api/addfav"
 
   const { favProList,setFavProductList, token } = useContext(productContext)
 
@@ -17,7 +16,7 @@ const Fav = () => {
           Authorization: `Bearer ${token}`,
         };
         
-        const response = await axios.get('http://https://shoestop-backend-zo6y.onrender.com/api/addfav', { headers });
+        const response = await api.get('/api/addfav', { headers });
         setFavProductList(response.data);
       }
     } catch (error) {
@@ -26,7 +25,7 @@ const Fav = () => {
   };
 
   const removeFavItems = async (id) => {
-    await axios.delete(`${url}/${id}`)
+    await api.delete(`/api/addfav/${id}`)
       .then(res => getFav())
   }
 

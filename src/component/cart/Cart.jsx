@@ -2,11 +2,10 @@ import React, { useContext, useEffect, useState } from 'react'
 import './cart.css'
 import { Button, Container } from 'react-bootstrap'
 import { productContext } from '../contextAPI/Context'
-import axios from 'axios'
+import api from '../../api'
 
 const Cart = () => {
 
-  const url = "http://https://shoestop-backend-zo6y.onrender.com:/api/addcart"
 
   const { cartProduct, setCartProducts,getcart} = useContext(productContext)
   const [total, setTotal] = useState(0)
@@ -27,7 +26,7 @@ const Cart = () => {
   }, [cartProduct]);
 
   const removeFavItems = async (id) => {
-    await axios.delete(`${url}/${id}`)
+    await api.delete(`/api/addcart/${id}`)
     getcart()
   }
 

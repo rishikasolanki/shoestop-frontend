@@ -1,4 +1,4 @@
-import axios from 'axios';
+import api from '../../api';
 import React, { createContext, useEffect, useState } from 'react';
 
 export const productContext = createContext();
@@ -21,7 +21,7 @@ const Context = ({ children }) => {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get('http://https://shoestop-backend-zo6y.onrender.com/api/addfav', { headers });
+        const response = await api.get('/api/addfav', { headers });
         setFavProductList(response.data);
       }
     } catch (error) {
@@ -37,7 +37,7 @@ const Context = ({ children }) => {
           Authorization: `Bearer ${token}`,
         };
 
-        const response = await axios.get('http://https://shoestop-backend-zo6y.onrender.com/api/addcart', { headers });
+        const response = await api.get('/api/addcart', { headers });
         setCartProducts(response.data);
       }
     } catch (error) {

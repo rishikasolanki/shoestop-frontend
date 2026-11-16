@@ -1,4 +1,4 @@
-import axios from 'axios'
+import api from '../../api'
 import React, { useContext, useEffect, useState } from 'react'
 import './home.css'
 import { Button } from 'react-bootstrap'
@@ -11,7 +11,7 @@ const Product = () => {
     const { token } = useContext( productContext )
 
     const fetchData = async () => {
-        await axios.get("http://https://shoestop-backend-zo6y.onrender.com/api/getproducts")
+        await api.get('/api/getproducts')
             .then(res => setProducts(res.data))
     }
 
@@ -24,7 +24,7 @@ const Product = () => {
             Authorization: `Bearer ${token}`,
           };
         console.log(image,title,company,price);
-        axios.post('http://https://shoestop-backend-zo6y.onrender.com/api/addfav', {
+        api.post('/api/addfav', {
             image,title,company,price
           },{
             headers
@@ -48,7 +48,7 @@ const Product = () => {
     const addtoCart = (image,title,company,price) =>{
         console.log(token);
         
-        axios.post('http://https://shoestop-backend-zo6y.onrender.com/api/addcart', {
+        api.post('/api/addcart', {
             image,title,company,price
           },{
             headers : {
