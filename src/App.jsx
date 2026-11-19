@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './component/home/Home'
@@ -9,10 +9,12 @@ import Cart from './component/cart/Cart'
 import Signup from './component/signup/Signup'
 import Login from './component/login/Login'
 import NavbarLog from './component/navbar/NavbarLog'
+import { productContext } from './component/contextAPI/Context'
 
 const App = () => {
 
-  const hasToken = !!localStorage.getItem('token');
+  const { token } = useContext(productContext)
+  const hasToken = !!token || !!localStorage.getItem('token')
 
   return (
     <div>

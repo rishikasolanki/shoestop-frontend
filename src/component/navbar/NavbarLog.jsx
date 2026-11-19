@@ -2,8 +2,16 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Button from 'react-bootstrap/Button';
+import { useContext } from 'react';
+import { productContext } from '../contextAPI/Context';
 
 function NavbarLog() {
+    const { setToken } = useContext(productContext)
+
+    const logout = () => {
+        localStorage.removeItem('token')
+        setToken('')
+    }
 
     return (
         <Navbar collapseOnSelect expand="lg" bg="dark" data-bs-theme="dark">
@@ -18,7 +26,7 @@ function NavbarLog() {
                        
                     </Nav>
                     <Nav className="mx-5">
-                    <Button variant="light px-4" href='/login'>log out</Button>               
+                    <Button variant="light px-4" onClick={logout}>log out</Button>
                     </Nav>
 
                 </Navbar.Collapse>

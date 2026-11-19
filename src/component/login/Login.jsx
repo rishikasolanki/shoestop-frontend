@@ -9,6 +9,7 @@ const Login = () => {
     const { token,setToken } = useContext(productContext)
     const [email, setMail] = useState('')
     const [password, setPassword] = useState('')
+    const [error, setError] = useState('')
   
  
     const changeMailHandler = (e) => {
@@ -18,20 +19,21 @@ const Login = () => {
         setPassword(e.target.value)
     }
   
-    const submitHandler = () => {
-      // console.log(name, mail, password)
-      api.post('/login', { email, password })
-      .then(res => {
-          if (res.status === 200 || res.status === 201) {
-            
-              localStorage.setItem('token', res.data.token);
-              console.log(res.data); 
-              setToken(res.data.token)
-              navigate('/home')
-          } else {
-              console.log('Request failed with status:', res.status);
-          }
-      })
+    const submitHandler = async () => {
+      setError('')
+      try {
+        const res = await api.post('/login', { email, password })
+        localStorage.setItem('token', res.data.token)
+        setToken(res.data.token)
+        navigate('/home')
+      } catch (requestError) {
+        const status = requestError.response?.status
+        setError(status === 401
+          ? 'Email or password is incorrect. If this is a new account, sign up first.'
+          : status
+            ? `Login failed (HTTP ${status}). Check the backend deployment.`
+            : 'Cannot reach the backend. Check the public API URL and try again.')
+      }
   }
   
   
@@ -40,6 +42,7 @@ const Login = () => {
         <input type="text" placeholder='email' onChange={(e) => { changeMailHandler(e) }}/>
         <input type="password" placeholder='password'  onChange={(e) => { changePasswordHandler(e) }} />
         <button onClick={() => { submitHandler() }}>Login</button>
+        {error && <p role="alert" style={{ color: 'crimson' }}>{error}</p>}
       </div>
     )
   }
